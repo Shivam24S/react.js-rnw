@@ -22,6 +22,8 @@ const person2 = {
   city1: "ahm",
 };
 
+// merging
+
 const peopleData = { ...person1, ...person2 };
 
 console.log(peopleData);
