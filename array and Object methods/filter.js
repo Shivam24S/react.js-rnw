@@ -1,10 +1,8 @@
-const number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+const number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const evenNumber = number.filter((num) => num % 2 == 0);
+const even = number.filter((num) => num % 2 == 0);
 
-console.log(evenNumber);
-
-//another example
+console.log(even);
 
 const personData = [
   {
@@ -13,17 +11,17 @@ const personData = [
     city: "bvn",
   },
   {
-    name: "john",
+    name: "John",
     age: 20,
-    city: "bvn",
+    city: "Ahm",
   },
   {
-    name: "jimmy",
+    name: "Serra",
     age: 17,
-    city: "bvn",
+    city: "srt",
   },
 ];
 
-const eligiblePerson = personData.filter((p) => p.age > 18);
+const eligiblePerson = personData.filter((person) => person.age > 18);
 
 console.log(eligiblePerson);

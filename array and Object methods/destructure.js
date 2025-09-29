@@ -1,31 +1,27 @@
-// array destruction
+const fruits = ["apple", "banana", "mango", "strawberry"];
 
-const fruits = ["apple", "banana", "mango", "popeye", "strawberry"];
+console.log(fruits.at(1));
 
-const fruits1 = fruits[0];
+console.log(fruits[2]);
 
-console.log(fruits1);
+// destructing
 
-// const [first, second] = fruits;
+const [one, two] = fruits;
 
-const [apple, banana] = fruits;
+console.log(one);
 
-console.log(apple);
-
-console.log(banana);
-
-// object destructing
+// object
 
 const person = {
   name: "alice",
+  city: "bvn",
   age: 22,
-  address: "bvn",
 };
 
 console.log(person.name);
 
-// now using destructing way
+// destructure
 
-const { name, age, address } = person;
+const { name } = person;
 
-console.log(name, age, address);
+console.log(name);
