@@ -1,4 +1,5 @@
 import ObjectUseState from "./hooks/ObjectUseState";
+import UseEffect from "./hooks/UseEffect";
 import UseState from "./hooks/UseState";
 
 const App = () => {
@@ -7,6 +8,8 @@ const App = () => {
       <UseState />
       <br />
       <ObjectUseState />
+      <br />
+      <UseEffect />
     </>
   );
 };
