@@ -1,41 +1,33 @@
 import { useState } from "react";
 
 const UseState = () => {
-  const [name, setName] = useState("");
+  const [input, setInput] = useState("");
 
-  const [count, setCount] = useState(0);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  const [counter, setCounter] = useState(0);
 
   const handleIncrease = () => {
-    setCount((count) => count + 1);
-  };
-
-  const handleDecrease = () => {
-    setCount((count) => count - 1);
+    setCounter((count) => count + 1);
   };
 
   return (
     <>
-      <input type="text" value={name} onChange={handleNameChange} />
-      <br />
-      <h1>{name}</h1>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="please enter your name"
+      />
 
       <br />
-      <br />
-      <h1>{count}</h1>
+
+      <h1> {input}</h1>
 
       <br />
-      <br />
+
+      <h1> counter: {counter}</h1>
+
       <button onClick={handleIncrease}>increase</button>
-
-      <br />
-      <br />
-      <button onClick={handleDecrease}>decrease</button>
-
-      <br />
+      <button onClick={() => setCounter((count) => count - 1)}>decrease</button>
     </>
   );
 };
