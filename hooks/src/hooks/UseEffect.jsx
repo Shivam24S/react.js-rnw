@@ -1,33 +1,61 @@
 import React, { useEffect, useState } from "react";
 
+import axios from "axios";
+
 const UseEffect = () => {
   const [user, setUser] = useState([]);
 
   const [fetchData, setFetchData] = useState(false);
 
+  const [counter, setCount] = useState(0);
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://jsonplaceholder.typicode.com/users"
+  //       );
+
+  //       const data = await response.json();
+
+  //       if (!data || data.length === 0) {
+  //         setUser([]);
+  //       } else {
+  //         setUser(data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error.message);
+  //       setUser([]);
+  //     }
+  //   };
+
+  //   if (fetchData === true) {
+  //     fetchUserData();
+  //   }
+  // }, [fetchData]);
+
+  // const handleFetchData = () => {
+  //   setFetchData(true);
+  // };
+
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
+      const data = await axios.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
 
-        const data = await response.json();
-
-        if (!data || data.length === 0) {
-          setUser([]);
-        } else {
-          setUser(data);
-        }
-      } catch (error) {
-        console.log(error.message);
+      if (!data || data.length === 0) {
         setUser([]);
+      } else {
+        setUser(data.data);
       }
     };
 
     if (fetchData === true) {
       fetchUserData();
     }
+
+    console.log("only called when dependencies changes");
   }, [fetchData]);
 
   const handleFetchData = () => {
@@ -36,6 +64,10 @@ const UseEffect = () => {
 
   return (
     <>
+      <h1>{counter}</h1>
+
+      <br />
+      <button onClick={() => setCount((count) => count + 1)}>increase</button>
       <button onClick={handleFetchData}>Fetch user data</button>
       <table>
         <thead>
