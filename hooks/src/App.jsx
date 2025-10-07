@@ -1,9 +1,12 @@
-import UseState from "./hooks/UseState";
+// import UseState from "./hooks/UseState";
+
+import ObjectUseState from "./hooks/ObjectUseState";
 
 const App = () => {
   return (
     <>
-      <UseState />
+      {/* <UseState /> */}
+      <ObjectUseState />
     </>
   );
 };

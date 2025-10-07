@@ -1,76 +1,80 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "./ObjectState.css";
 
 const ObjectUseState = () => {
   const [input, setInput] = useState({
     name: "",
     age: "",
     email: "",
+    city: "",
   });
 
   const [person, setPerson] = useState([]);
 
-  const handleChange = (field, e) => {
-    setInput((person) => {
+  const handleInputData = (field, e) => {
+    setInput((inputData) => {
       return {
-        ...person,
+        ...inputData,
         [field]: e.target.value,
       };
     });
   };
 
-  const handleSaveUser = () => {
+  const handleAdd = () => {
     setPerson((person) => [...person, input]);
-    setInput({ name: "", age: "", email: "" });
+    setInput({ name: "", age: "", email: "", city: "" });
   };
+
+  console.log("person detail", person);
 
   return (
     <>
       <input
         type="text"
-        placeholder="enter your name"
         value={input.name}
-        onChange={(e) => {
-          handleChange("name", e);
-        }}
+        placeholder="enter your name"
+        onChange={(e) => handleInputData("name", e)}
       />
-
       <br />
-
       <input
-        type="text"
-        placeholder="enter your age"
+        type="number"
         value={input.age}
-        onChange={(e) => {
-          handleChange("age", e);
-        }}
+        placeholder="enter your age"
+        onChange={(e) => handleInputData("age", e)}
       />
-
       <br />
-
+      <input
+        type="email"
+        value={input.email}
+        placeholder="enter your email"
+        onChange={(e) => handleInputData("email", e)}
+      />
+      <br />
       <input
         type="text"
-        placeholder="enter your email"
-        value={input.email}
-        onChange={(e) => handleChange("email", e)}
+        value={input.city}
+        placeholder="enter your city"
+        onChange={(e) => handleInputData("city", e)}
       />
       <br />
 
-      <h1>person name {input.name}</h1>
+      <button onClick={handleAdd}>add</button>
 
-      <h1>Person age {input.age}</h1>
+      <h1>name:{input.name}</h1>
 
-      <h1>Person email {input.email}</h1>
+      <h1>age:{input.age}</h1>
 
-      <button onClick={handleSaveUser}> save user</button>
+      <h1>email:{input.email}</h1>
 
-      <h1>saved user</h1>
+      <h1>city:{input.city}</h1>
 
       <table>
         <thead>
           <tr>
-            <th>User name</th>
-            <th>User age</th>
-            <th>User email</th>
+            <th>name</th>
+            <th>age</th>
+            <th>email</th>
+            <th>city</th>
           </tr>
         </thead>
         <tbody>
@@ -81,6 +85,7 @@ const ObjectUseState = () => {
                   <td>{user.name}</td>
                   <td>{user.age}</td>
                   <td>{user.email}</td>
+                  <td>{user.city}</td>
                 </tr>
               </>
             );
