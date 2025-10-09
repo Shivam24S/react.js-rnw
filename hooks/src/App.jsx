@@ -1,6 +1,10 @@
 // import UseState from "./hooks/UseState";
 
-import UseEffect from "./hooks/UseEffect";
+import OnChange from "./events/OnChange";
+import OnClick from "./events/OnClick";
+import OnSubmit from "./events/OnSubmit";
+
+// import UseEffect from "./hooks/UseEffect";
 
 // import { useState } from "react";
 // import LifeCycle from "./hooks/LifeCycle";
@@ -19,7 +23,15 @@ const App = () => {
 
       {/* {show && <LifeCycle />} */}
 
-      <UseEffect />
+      {/* <UseEffect /> */}
+
+      {/* events */}
+
+      {/* <OnClick /> */}
+
+      {/* <OnChange /> */}
+
+      <OnSubmit />
     </>
   );
 };
