@@ -1,6 +1,6 @@
 // ex-1
 
-import { useState } from "react";
+// import { useState } from "react";
 
 // const PassingArgument = () => {
 //   const handleClick = (name) => {

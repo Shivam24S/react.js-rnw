@@ -1,6 +1,7 @@
 // import UseState from "./hooks/UseState";
 
 // import { useState } from "react";
+import Conditional from "./events/Conditional";
 import OnChange from "./events/OnChange";
 import OnClick from "./events/OnClick";
 import OnSubmit from "./events/OnSubmit";
@@ -37,6 +38,8 @@ const App = () => {
 
       {/* <OnSubmit /> */}
 
+      {/* passing argument in event using props  */}
+
       {/* <input
         type="text"
         value={input}
@@ -44,6 +47,9 @@ const App = () => {
       />
 
       <PassingArgument name={input} /> */}
+
+      {/* conditional rendering example */}
+      <Conditional />
     </>
   );
 };
