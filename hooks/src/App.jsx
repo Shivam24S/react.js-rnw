@@ -1,8 +1,10 @@
 // import UseState from "./hooks/UseState";
 
+// import { useState } from "react";
 import OnChange from "./events/OnChange";
 import OnClick from "./events/OnClick";
 import OnSubmit from "./events/OnSubmit";
+import PassingArgument from "./events/PassingArgument";
 
 // import UseEffect from "./hooks/UseEffect";
 
@@ -12,6 +14,8 @@ import OnSubmit from "./events/OnSubmit";
 
 const App = () => {
   // const [show, setShow] = useState(true);
+
+  // const [input, setInput] = useState("");
   return (
     <>
       {/* <UseState /> */}
@@ -31,7 +35,15 @@ const App = () => {
 
       {/* <OnChange /> */}
 
-      <OnSubmit />
+      {/* <OnSubmit /> */}
+
+      {/* <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      <PassingArgument name={input} /> */}
     </>
   );
 };
