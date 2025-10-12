@@ -6,6 +6,7 @@ import OnChange from "./events/OnChange";
 import OnClick from "./events/OnClick";
 import OnSubmit from "./events/OnSubmit";
 import PassingArgument from "./events/PassingArgument";
+import List from "./lists/List";
 
 // import UseEffect from "./hooks/UseEffect";
 
@@ -49,7 +50,11 @@ const App = () => {
       <PassingArgument name={input} /> */}
 
       {/* conditional rendering example */}
-      <Conditional />
+      {/* <Conditional /> */}
+
+      {/* lists */}
+
+      <List />
     </>
   );
 };
