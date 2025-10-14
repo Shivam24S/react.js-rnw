@@ -6,10 +6,13 @@ import OnChange from "./events/OnChange";
 import OnClick from "./events/OnClick";
 import OnSubmit from "./events/OnSubmit";
 import PassingArgument from "./events/PassingArgument";
+import Controlled from "./forms/Controlled";
+import Uncontrolled from "./forms/Uncontrolled";
+import WorkingWithForms from "./forms/WorkingWithForms";
+
 import List from "./lists/List";
 import ObjectList from "./lists/ObjectList";
 import Focus from "./refs/Focus";
-import Uncontrolled from "./refs/Uncontrolled";
 
 // import UseEffect from "./hooks/UseEffect";
 
@@ -64,7 +67,15 @@ const App = () => {
 
       {/* ref */}
 
-      <Focus />
+      {/* <Focus /> */}
+
+      {/* forms */}
+
+      {/* <Controlled /> */}
+
+      {/* <Uncontrolled /> */}
+
+      <WorkingWithForms />
     </>
   );
 };
