@@ -13,6 +13,9 @@ import WorkingWithForms from "./forms/WorkingWithForms";
 import List from "./lists/List";
 import ObjectList from "./lists/ObjectList";
 import Focus from "./refs/Focus";
+import External from "./styling/External";
+import InlineCss from "./styling/InlineCss";
+import Module from "./styling/Module";
 
 // import UseEffect from "./hooks/UseEffect";
 
@@ -75,7 +78,15 @@ const App = () => {
 
       {/* <Uncontrolled /> */}
 
-      <WorkingWithForms />
+      {/* <WorkingWithForms /> */}
+
+      {/* styling in forms */}
+
+      {/* <InlineCss /> */}
+
+      {/* <External /> */}
+
+      <Module />
     </>
   );
 };

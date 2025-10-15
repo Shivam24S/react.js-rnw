@@ -1,0 +1,38 @@
+form {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  gap: 30px;
+
+  padding: 30px;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.input {
+  height: 40px;
+  width: 300px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+}
+
+.input:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  background-color: #93e4ff;
+  transition: all 0.5s ease;
+}
