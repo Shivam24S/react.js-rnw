@@ -7,7 +7,9 @@ import OnClick from "./events/OnClick";
 import OnSubmit from "./events/OnSubmit";
 import PassingArgument from "./events/PassingArgument";
 import Controlled from "./forms/Controlled";
+import FormikForm from "./forms/Formik";
 import Uncontrolled from "./forms/Uncontrolled";
+import Validation from "./forms/Validation";
 import WorkingWithForms from "./forms/WorkingWithForms";
 
 import List from "./lists/List";
@@ -86,7 +88,12 @@ const App = () => {
 
       {/* <External /> */}
 
-      <Module />
+      {/* <Module /> */}
+
+      {/* validation */}
+
+      {/* <Validation /> */}
+      <FormikForm />
     </>
   );
 };
