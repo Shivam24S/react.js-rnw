@@ -9,9 +9,7 @@ const Validation = () => {
 
   const [error, setErrors] = useState({});
 
-  const [formData, setFormData] = useState([]);
-
-  const handleChange = (field, e) => {
+  const handleInputData = (field, e) => {
     setInputData((data) => {
       return {
         ...data,
@@ -21,7 +19,7 @@ const Validation = () => {
   };
 
   const validation = () => {
-    let newErrors = {};
+    const newErrors = {};
 
     if (!inputData.name.trim()) {
       newErrors.name = "name is required";
@@ -32,7 +30,7 @@ const Validation = () => {
     }
 
     if (inputData.password.length < 6) {
-      newErrors.password = "password length  must be at least 6 character";
+      newErrors.password = "password must contain at least 6 character";
     }
 
     return newErrors;
@@ -43,14 +41,14 @@ const Validation = () => {
 
     const validateErrors = validation();
 
+    console.log("validate", validateErrors);
+
     if (Object.keys(validateErrors).length > 0) {
       setErrors(validateErrors);
       return;
     }
 
-    setFormData((data) => [...data, inputData]);
-    setInputData({ name: "", email: "", password: "" });
-    setErrors({});
+    console.log("form submitted", inputData);
   };
 
   return (
@@ -60,27 +58,30 @@ const Validation = () => {
           type="text"
           placeholder="enter your name"
           value={inputData.name}
-          onChange={(e) => handleChange("name", e)}
+          onChange={(e) => handleInputData("name", e)}
         />
+
+        {error.name && <p style={{ color: "red" }}>{error.name}</p>}
+
         <input
           type="email"
           placeholder="enter your email"
           value={inputData.email}
-          onChange={(e) => handleChange("email", e)}
+          onChange={(e) => handleInputData("email", e)}
         />
+
+        {error.email && <p style={{ color: "red" }}>{error.email}</p>}
         <input
           type="password"
           placeholder="enter your password"
           value={inputData.password}
-          onChange={(e) => handleChange("password", e)}
+          onChange={(e) => handleInputData("password", e)}
         />
+
+        {error.password && <p style={{ color: "red" }}>{error.password}</p>}
 
         <button type="submit">submit</button>
       </form>
-
-      {error.name && <p>{error.name}</p>}
-      {error.email && <p>{error.email}</p>}
-      {error.password && <p>{error.password}</p>}
     </>
   );
 };
