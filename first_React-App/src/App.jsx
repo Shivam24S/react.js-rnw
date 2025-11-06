@@ -11,12 +11,12 @@ function App() {
       {/* <h1>hello</h1>;<Jsx /> */}
       {/* <Jsx></Jsx> */}
       {/* <State /> */}
-      {/* <PrevState /> */}
+      <PrevState />
 
       {/* <Props greeting={"good morning"} /> */}
 
-      <ClassComponent />
-      <FunctionalComponent />
+      {/* <ClassComponent />
+      <FunctionalComponent /> */}
     </>
   );
 }
