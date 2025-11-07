@@ -17,8 +17,9 @@ const InputForm = ({ addTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     addTodo(input);
+
+    setInput({ task: "", description: "" });
   };
 
   return (
