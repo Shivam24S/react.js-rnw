@@ -18,25 +18,56 @@ const App = () => {
 
   const [todoData, setTodoData] = useState(initialValues);
 
+  const [editVal, setEditVal] = useState(null);
+
   const addTodo = (input) => {
-    const newData = {
-      id: new Date().getTime(),
-      task: input.task,
-      description: input.description,
-    };
+    if (!input.task || !input.description) {
+      return alert("task and description data is required");
+    } else if (editVal) {
+      setTodoData((prev) =>
+        prev.map((t) =>
+          t.id === editVal.id
+            ? { ...t, task: input.task, description: input.description }
+            : t
+        )
+      );
+      setEditVal(null);
+    } else {
+      const newData = {
+        id: new Date().getTime(),
+        task: input.task,
+        description: input.description,
+      };
 
-    // console.log("data", newData);
+      // console.log("data", newData);
 
-    setTodoData((prevData) => [...prevData, newData]);
+      setTodoData((prevData) => [...prevData, newData]);
+    }
   };
 
-  console.log("todoData", todoData);
+  const editTodo = (id) => {
+    const editTodo = todoData.find((t) => t.id === id);
+
+    setEditVal(editTodo);
+  };
+
+  const deleteTodo = (id) => {
+    const deleteTodo = todoData.filter((t) => t.id !== id);
+
+    setTodoData(deleteTodo);
+
+    // const index = todoData.findIndex((t) => t.id === id);
+
+    // if (index !== -1) {
+    //   todoData.splice(index, 1);
+    // }
+  };
 
   return (
     <>
-      <InputForm addTodo={addTodo} />
+      <InputForm addTodo={addTodo} editVal={editVal} />
       <br />
-      <ListTodo todo={todoData} />
+      <ListTodo todo={todoData} editTodo={editTodo} deleteTodo={deleteTodo} />
     </>
   );
 };
