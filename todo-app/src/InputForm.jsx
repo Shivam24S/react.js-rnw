@@ -4,10 +4,17 @@ const InputForm = ({ addTodo, editVal }) => {
   const [input, setInput] = useState({
     task: "",
     description: "",
+    completed: false,
   });
 
   useEffect(() => {
-    editVal ? setInput(editVal) : null;
+    editVal
+      ? setInput({
+          task: editVal.task,
+          description: editVal.description,
+          completed: false, // Force completed to false on edit
+        })
+      : null;
   }, [editVal]);
 
   const handleInputData = (identifier, e) => {
@@ -23,7 +30,7 @@ const InputForm = ({ addTodo, editVal }) => {
     e.preventDefault();
     addTodo(input);
 
-    setInput({ task: "", description: "" });
+    setInput({ task: "", description: "", completed: false });
   };
 
   return (

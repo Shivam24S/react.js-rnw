@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputForm from "./InputForm";
 import ListTodo from "./ListTodo";
+import Stats from "./Stats";
 
 const App = () => {
   const initialValues = [
@@ -8,11 +9,13 @@ const App = () => {
       id: 1,
       task: "learn",
       description: "learn react in detail",
+      completed: false,
     },
     {
       id: 2,
       task: "practice",
       description: "practice react concept",
+      completed: false,
     },
   ];
 
@@ -27,7 +30,12 @@ const App = () => {
       setTodoData((prev) =>
         prev.map((t) =>
           t.id === editVal.id
-            ? { ...t, task: input.task, description: input.description }
+            ? {
+                ...t,
+                task: input.task,
+                description: input.description,
+                completed: false,
+              }
             : t
         )
       );
@@ -37,6 +45,7 @@ const App = () => {
         id: new Date().getTime(),
         task: input.task,
         description: input.description,
+        completed: false,
       };
 
       // console.log("data", newData);
@@ -55,19 +64,38 @@ const App = () => {
     const deleteTodo = todoData.filter((t) => t.id !== id);
 
     setTodoData(deleteTodo);
-
-    // const index = todoData.findIndex((t) => t.id === id);
-
-    // if (index !== -1) {
-    //   todoData.splice(index, 1);
-    // }
   };
+
+  const handleToggleComplete = (id) => {
+    setTodoData((todo) =>
+      todo.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+    );
+  };
+
+  const totalTask = todoData.length;
+
+  const pendingTask = todoData.filter(
+    (todo) => todo.completed === false
+  ).length;
+
+  const completedTask = totalTask - pendingTask;
 
   return (
     <>
       <InputForm addTodo={addTodo} editVal={editVal} />
       <br />
-      <ListTodo todo={todoData} editTodo={editTodo} deleteTodo={deleteTodo} />
+      <Stats
+        total={totalTask}
+        pending={pendingTask}
+        completed={completedTask}
+      />
+      <br />
+      <ListTodo
+        todo={todoData}
+        editTodo={editTodo}
+        deleteTodo={deleteTodo}
+        handleToggleComplete={handleToggleComplete}
+      />
     </>
   );
 };
