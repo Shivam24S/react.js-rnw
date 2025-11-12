@@ -1,12 +1,12 @@
 import React from "react";
 
-const ListTodo = ({ todo, editTodo, deleteTodo, handleToggleComplete }) => {
+const ListTodo = ({ todo, editTodo, deleteTodo, toggleCompleted }) => {
   return (
     <>
       <table border="1px solid black">
         <thead>
           <tr>
-            <th>mark</th>
+            <th>status</th>
             <th>Task</th>
             <th>Description</th>
             <th colSpan="2">Actions</th>
@@ -18,11 +18,11 @@ const ListTodo = ({ todo, editTodo, deleteTodo, handleToggleComplete }) => {
               <tr key={todo.id}>
                 <td>
                   <input
+                    type="checkbox"
                     checked={todo.completed}
                     onChange={() => {
-                      handleToggleComplete(todo.id);
+                      toggleCompleted(todo.id);
                     }}
-                    type="checkbox"
                   />
                 </td>
                 <td>{todo.task}</td>

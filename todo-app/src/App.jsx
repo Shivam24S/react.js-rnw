@@ -9,7 +9,7 @@ const App = () => {
       id: 1,
       task: "learn",
       description: "learn react in detail",
-      completed: false,
+      completed: true,
     },
     {
       id: 2,
@@ -66,35 +66,38 @@ const App = () => {
     setTodoData(deleteTodo);
   };
 
-  const handleToggleComplete = (id) => {
-    setTodoData((todo) =>
-      todo.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+  const toggleTaskCompleted = (id) => {
+    setTodoData((prevData) =>
+      prevData.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
     );
   };
 
-  const totalTask = todoData.length;
+  const totalTaskData = todoData.length;
 
-  const pendingTask = todoData.filter(
-    (todo) => todo.completed === false
+  const completedTask = todoData.filter(
+    (todo) => todo.completed === true
   ).length;
 
-  const completedTask = totalTask - pendingTask;
+  const pendingTask = totalTaskData - completedTask;
 
   return (
     <>
       <InputForm addTodo={addTodo} editVal={editVal} />
       <br />
       <Stats
-        total={totalTask}
-        pending={pendingTask}
+        total={totalTaskData}
         completed={completedTask}
+        pending={pendingTask}
       />
+
       <br />
       <ListTodo
         todo={todoData}
         editTodo={editTodo}
         deleteTodo={deleteTodo}
-        handleToggleComplete={handleToggleComplete}
+        toggleCompleted={toggleTaskCompleted}
       />
     </>
   );
