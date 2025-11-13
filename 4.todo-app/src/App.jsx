@@ -1,7 +1,8 @@
 import { useState } from "react";
-import InputForm from "./InputForm";
-import ListTodo from "./ListTodo";
-import Stats from "./Stats";
+import InputForm from "./component/InputForm";
+import ListTodo from "./component/ListTodo";
+import Stats from "./component/Stats";
+import styles from "./app.module.css";
 
 const App = () => {
   const initialValues = [
@@ -84,21 +85,28 @@ const App = () => {
 
   return (
     <>
-      <InputForm addTodo={addTodo} editVal={editVal} />
-      <br />
-      <Stats
-        total={totalTaskData}
-        completed={completedTask}
-        pending={pendingTask}
-      />
+      <div className={styles.layout}>
+        <div className={styles.heading}>
+          <h1>Task Manager</h1>
+          <p>Organize your task efficiently</p>
+        </div>
 
-      <br />
-      <ListTodo
-        todo={todoData}
-        editTodo={editTodo}
-        deleteTodo={deleteTodo}
-        toggleCompleted={toggleTaskCompleted}
-      />
+        <InputForm addTodo={addTodo} editVal={editVal} />
+        <br />
+        <Stats
+          total={totalTaskData}
+          completed={completedTask}
+          pending={pendingTask}
+        />
+
+        <br />
+        <ListTodo
+          todo={todoData}
+          editTodo={editTodo}
+          deleteTodo={deleteTodo}
+          toggleCompleted={toggleTaskCompleted}
+        />
+      </div>
     </>
   );
 };

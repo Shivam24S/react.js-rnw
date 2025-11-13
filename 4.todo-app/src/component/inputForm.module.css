@@ -1,0 +1,41 @@
+.formCard {
+  height: 350px;
+  width: 800px;
+  background-color: aliceblue;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.formInput {
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.label {
+  margin-bottom: 10px;
+}
+
+.task,
+.description {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  width: 750px;
+  border: none;
+  height: 40px;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  margin: auto;
+  background: linear-gradient(90deg, #c836ff, #2e82ff);
+}
