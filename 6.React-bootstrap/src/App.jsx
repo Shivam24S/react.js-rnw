@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Carousel from "./components/Carousel";
 import About from "./components/About";
+import Packages from "./components/Packages";
 const App = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const App = () => {
       <main>
         <Carousel />
         <About />
+        <Packages />
       </main>
     </>
   );
