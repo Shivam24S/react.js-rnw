@@ -39,6 +39,7 @@ const About = () => {
               src="https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg"
               alt="about us"
               className="w-90 rounded-3 float-end"
+              thumbnail
               style={{ height: "500px", objectFit: "cover" }}
             />
           </Col>
