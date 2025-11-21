@@ -65,7 +65,7 @@ function Packages() {
         {packages.map((p) => {
           return (
             <Col md={4} className="text-center" key={p.id}>
-              <Card>
+              <Card className="bg-dark text-white border-white">
                 <Image
                   variant="top"
                   src={p.image}

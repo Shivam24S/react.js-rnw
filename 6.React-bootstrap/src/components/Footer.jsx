@@ -22,6 +22,20 @@ const Footer = () => {
           ></iframe>
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <a href="#instagram">
+            {" "}
+            <i class="fa-brands fa-instagram"></i>
+            Instagram
+          </a>
+
+          <i class="fa-brands fa-whatsapp"></i>
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-x-twitter"></i>
+          <i class="fa-brands fa-youtube"></i>
+        </Col>
+      </Row>
     </Container>
   );
 };

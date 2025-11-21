@@ -25,14 +25,9 @@ function FormExample() {
       validationSchema={schema}
       onSubmit={console.log}
       initialValues={{
-        fullName: "Mark",
-        lastName: "Otto",
-        username: "",
+        fullName: "",
         number: "",
-        state: "",
-        zip: "",
-        file: null,
-        terms: false,
+        email: "",
       }}
     >
       {({ handleSubmit, handleChange, values, touched, errors }) => (
@@ -72,6 +67,28 @@ function FormExample() {
                 value={values.number}
                 onChange={handleChange}
                 isInvalid={!!errors.number}
+              />
+
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.number}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group
+              //   as={Col}
+              //   md="6"
+              controlId="validationFormik103"
+              className="position-relative"
+            >
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="Email"
+                name="email"
+                placeholder="enter your email"
+                value={values.email}
+                onChange={handleChange}
+                isInvalid={!!errors.email}
               />
 
               <Form.Control.Feedback type="invalid" tooltip>
