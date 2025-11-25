@@ -1,10 +1,13 @@
 import React from "react";
 import ExpenseForm from "./component/ExpenseForm";
+import ExpenseContext from "./component/ExpenseContext";
 
 const App = () => {
   return (
     <>
-      <ExpenseForm />
+      <ExpenseContext>
+        <ExpenseForm />
+      </ExpenseContext>
     </>
   );
 };

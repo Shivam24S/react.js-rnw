@@ -7,7 +7,7 @@ export const expense = createContext({
   delete: () => {},
 });
 
-const ExpenseContext = () => {
+const ExpenseContext = ({ children }) => {
   const initialState = [
     {
       id: 1,
@@ -19,6 +19,26 @@ const ExpenseContext = () => {
   ];
 
   const [data, setData] = useState(initialState);
+
+  const add = (input) => {
+    const newData = {
+      id: new Date().getTime(),
+      title: input.title,
+      amount: input.amount,
+      category: input.category,
+      type: input.type,
+    };
+
+    setData((prev) => [...prev, newData]);
+  };
+
+  console.log("data", data);
+
+  const value = {
+    add,
+  };
+
+  return <expense.Provider value={value}>{children}</expense.Provider>;
 };
 
 export default ExpenseContext;
