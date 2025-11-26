@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 export const expense = createContext({
   add: () => {},
-  list: () => {},
+  list: [],
   update: () => {},
   delete: () => {},
 });
@@ -36,6 +36,7 @@ const ExpenseContext = ({ children }) => {
 
   const value = {
     add,
+    list: data,
   };
 
   return <expense.Provider value={value}>{children}</expense.Provider>;
