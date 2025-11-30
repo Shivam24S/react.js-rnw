@@ -8,6 +8,7 @@ const ExpenseList = () => {
     search: "",
     type: "all",
     category: "all",
+    sortedBy: "latest",
   });
 
   const handleChange = (identifier, e) => {
@@ -27,6 +28,24 @@ const ExpenseList = () => {
     .filter((l) =>
       filter.category === "all" ? true : l.category === filter.category
     );
+
+  const sortedList = [...filteredList].sort((a, b) => {
+    if (filter.sortedBy === "latest") {
+      return b.id - a.id;
+    }
+
+    if (filter.type === "oldest") {
+      return a.id - b.id;
+    }
+
+    if (filter.sortedBy === "ascending") {
+      return Number(a.amount) - Number(b.amount);
+    }
+
+    if (filter.sortedBy === "descending") {
+      return Number(b.amount) - Number(a.amount);
+    }
+  });
 
   return (
     <>
@@ -61,6 +80,18 @@ const ExpenseList = () => {
         <option value="shopping">Shopping</option>
       </select>
 
+      <label htmlFor="sortedBy">sortedBy</label>
+      <select
+        name="sortedBy"
+        value={filter.sortedBy}
+        onChange={(e) => handleChange("sortedBy", e)}
+      >
+        <option value="latest">latest</option>
+        <option value="oldest">oldest</option>
+        <option value="ascending">amount ascending</option>
+        <option value="descending">amount descending</option>
+      </select>
+
       <h1>expense data</h1>
       <table border="1px solid black">
         <thead>
@@ -73,8 +104,8 @@ const ExpenseList = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredList.length > 0 ? (
-            filteredList.map((l) => (
+          {sortedList.length > 0 ? (
+            sortedList.map((l) => (
               <tr key={l.id}>
                 <td>{l.title}</td>
                 <td>{l.amount}</td>
