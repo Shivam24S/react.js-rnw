@@ -6,10 +6,11 @@ const ExpenseData = () => {
 
   return (
     <>
+    <h1>credit</h1>
       <h1>{credit}</h1>
-
+    <h1>debit</h1>
       <h1>{debit}</h1>
-
+    <h1>balance</h1>
       <h1>{balance}</h1>
     </>
   );

@@ -22,10 +22,13 @@ const ExpenseContext = ({ children }) => {
     },
   ];
 
-  const [data, setData] = useState(() => {
-    const saved = localStorage.getItem("expenses");
+  const [data, setData] = useState(()=>{
 
-    return saved ? JSON.parse(saved) : initialState;
+    const saved = localStorage.getItem("expenses")
+
+
+    return saved ? JSON.parse(saved) : initialState
+
   });
 
   console.log("data", data);
@@ -63,9 +66,12 @@ const ExpenseContext = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(data));
-  }, [data]);
+
+  useEffect(()=>{
+
+    localStorage.setItem("expenses",JSON.stringify(data))
+  },[data])
+
 
   console.log("data", data);
 
