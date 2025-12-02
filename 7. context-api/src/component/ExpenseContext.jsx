@@ -1,130 +1,255 @@
-import { createContext, useEffect, useState } from "react";
+// import { createContext, useEffect, useState } from "react";
+
+
+
+// export const expense = createContext({
+//   add: () => {},
+//   list: [],
+//   update: () => {},
+//   deleteData: () => {},
+//   editValue: null,
+//   balance: 0,
+//   credit: 0,
+//   debit: 0,
+// });
+
+// const ExpenseContext = ({ children }) => {
+//   const initialState = [
+//     {
+//       id: 1,
+//       title: "burger",
+//       amount: "500",
+//       category: "food",
+//       type: "credit",
+//     },
+//   ];
+
+//   const [data, setData] = useState(()=>{
+
+//     const saved = localStorage.getItem("expenses")
+
+
+//     return saved ? JSON.parse(saved) : initialState
+
+//   });
+
+//   console.log("data", data);
+
+//   const [editValue, setEditValue] = useState(null);
+
+//   const add = (input) => {
+//     if (!input.title || !input.amount || !input.category || !input.type) {
+//       alert("please fill all the data required");
+//     } else if (editValue) {
+//       setData((prev) =>
+//         prev.map((d) =>
+//           d.id === editValue.id
+//             ? {
+//                 ...d,
+//                 title: input.title,
+//                 amount: input.amount,
+//                 category: input.category,
+//                 type: input.type,
+//               }
+//             : d
+//         )
+//       );
+//       setEditValue(null);
+//     } else {
+//       const newData = {
+//         id: new Date().getTime(),
+//         title: input.title,
+//         amount: input.amount,
+//         category: input.category,
+//         type: input.type,
+//       };
+
+//       setData((prev) => [...prev, newData]);
+//     }
+//   };
+
+
+//   useEffect(()=>{
+
+//     localStorage.setItem("expenses",JSON.stringify(data))
+//   },[data])
+
+
+//   console.log("data", data);
+
+//   const update = (id) => {
+//     console.log("id", id);
+
+//     const updateVal = data.find((d) => d.id === id);
+
+//     console.log("update", updateVal);
+
+//     setEditValue(updateVal);
+//   };
+
+//   const deleteData = (id) => {
+//     const remainData = data.filter((d) => d.id !== id);
+
+//     setData(remainData);
+//   };
+
+//   const credit = data
+//     .filter((d) => d.type === "credit")
+//     .reduce((acc, curr) => {
+//       acc += Number(curr.amount);
+//       return acc;
+//     }, 0);
+
+//   const debit = data
+//     .filter((d) => d.type === "debit")
+//     .reduce((acc, curr) => {
+//       acc += Number(curr.amount);
+//       return acc;
+//     }, 0);
+
+//   const balance = credit - debit;
+
+//   console.log("credit", credit);
+
+//   console.log("debit", debit);
+
+//   console.log("balance", balance);
+
+//   const value = {
+//     add,
+//     list: data,
+//     update,
+//     editValue,
+//     deleteData,
+//     credit,
+//     debit,
+//     balance,
+//   };
+
+//   return <expense.Provider value={value}>{children}</expense.Provider>;
+// };
+
+// export default ExpenseContext;
+
+
+
+
+// now stateManagement with useReducer hook
+import { createContext, useReducer,useEffect }  from  "react"
 
 export const expense = createContext({
-  add: () => {},
-  list: [],
-  update: () => {},
-  deleteData: () => {},
-  editValue: null,
-  balance: 0,
-  credit: 0,
-  debit: 0,
-});
+  list:[],
+  add:()=>{},
+  update:()=>{},
+  deleteData:()=>{},
+  credit:0,
+  debit:0,
+  balance:0,
+  editValue:null,
+})
 
-const ExpenseContext = ({ children }) => {
-  const initialState = [
-    {
-      id: 1,
-      title: "burger",
-      amount: "500",
-      category: "food",
-      type: "credit",
-    },
-  ];
+const initialValue = {
+  list:[{
+    id:1,
+    title:"salary",
+    amount:50000,
+    type:"credit",
+    category:"general",
+  }],
+  editValue:null,
+}
 
-  const [data, setData] = useState(()=>{
+const init = () =>{
+
+  try {
 
     const saved = localStorage.getItem("expenses")
 
+    return saved ? {...initialValue,list:JSON.parse(saved)} : initialValue
 
-    return saved ? JSON.parse(saved) : initialState
+  } catch (error) {
+    console.log(error)
+    return initialValue
+    
+  }
 
-  });
+}
 
-  console.log("data", data);
 
-  const [editValue, setEditValue] = useState(null);
 
-  const add = (input) => {
-    if (!input.title || !input.amount || !input.category || !input.type) {
-      alert("please fill all the data required");
-    } else if (editValue) {
-      setData((prev) =>
-        prev.map((d) =>
-          d.id === editValue.id
-            ? {
-                ...d,
-                title: input.title,
-                amount: input.amount,
-                category: input.category,
-                type: input.type,
-              }
-            : d
-        )
-      );
-      setEditValue(null);
-    } else {
-      const newData = {
-        id: new Date().getTime(),
-        title: input.title,
-        amount: input.amount,
-        category: input.category,
-        type: input.type,
-      };
 
-      setData((prev) => [...prev, newData]);
+const expenseReducer = (state,action)=>{
+
+  switch(action.type){
+
+    case "add":{
+
+      const input = action.payload
+
+      const newItem = {
+        id:new Date().getTime(),
+        title:input.title,
+        amount:input.amount,
+        type:input.type,
+        category:input.category
+      }
+
+
+      return {
+        ...state,
+        list:[...state.list,newItem]
+      }
+
+
+
     }
-  };
 
 
-  useEffect(()=>{
+    default:
 
-    localStorage.setItem("expenses",JSON.stringify(data))
-  },[data])
+    return state
+  }
+
+}
 
 
-  console.log("data", data);
 
-  const update = (id) => {
-    console.log("id", id);
 
-    const updateVal = data.find((d) => d.id === id);
 
-    console.log("update", updateVal);
+const ExpenseContext = ({children}) => {
 
-    setEditValue(updateVal);
-  };
 
-  const deleteData = (id) => {
-    const remainData = data.filter((d) => d.id !== id);
+  const [state,dispatch]=useReducer(expenseReducer,initialValue,init)
 
-    setData(remainData);
-  };
 
-  const credit = data
-    .filter((d) => d.type === "credit")
-    .reduce((acc, curr) => {
-      acc += Number(curr.amount);
-      return acc;
-    }, 0);
+  const useEffect = (()=>{
 
-  const debit = data
-    .filter((d) => d.type === "debit")
-    .reduce((acc, curr) => {
-      acc += Number(curr.amount);
-      return acc;
-    }, 0);
+    localStorage.setItem("expenses",JSON.stringify(state.list))
 
-  const balance = credit - debit;
+  },[state.list])
 
-  console.log("credit", credit);
 
-  console.log("debit", debit);
+  const add = (input) =>{
 
-  console.log("balance", balance);
+    if(!input.title || !input.amount || !input.type || !input.category){
+      alert("please fill all the required field")
+      return 
+    }
+
+    dispatch({
+      type:"add",
+      payload:input
+    })
+
+  }
 
   const value = {
-    add,
-    list: data,
-    update,
-    editValue,
-    deleteData,
-    credit,
-    debit,
-    balance,
-  };
+    add
+  }
 
-  return <expense.Provider value={value}>{children}</expense.Provider>;
-};
 
-export default ExpenseContext;
+  return <expense.Provider value={value} >{children}</expense.Provider>
+
+}
+
+export default ExpenseContext
