@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import QUESTIONS from "../../qns.js"
+import QuizTimer from './QuizTimer.jsx'
 
 const Quiz = () => {
 
@@ -12,10 +13,10 @@ const Quiz = () => {
     const qnsIndex = userAnswer.length
 
 
-    const handleAnswer = (ans)=>{
+    const handleAnswer = useCallback((ans)=>{
         setUserAnswer((prevAnswer)=>[...prevAnswer,ans])
 
-    }
+    },[])
 
 
     const quizComplete = qnsIndex === QUESTIONS.length
@@ -38,10 +39,15 @@ const Quiz = () => {
 
 
 
+    const handleSkip = useCallback(()=>handleAnswer(null),[handleAnswer])
+
 
   return (
     
     <>
+
+<QuizTimer  timer={5000} onTimeOut={()=>handleSkip()}  />
+
     <h1>{QUESTIONS[qnsIndex].qns}</h1>
 
     <ul>
