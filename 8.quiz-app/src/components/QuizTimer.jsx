@@ -4,18 +4,14 @@ const QuizTimer = ({ timer, onTimeOut }) => {
   const [remainTime, setRemainTime] = useState(timer);
 
 
-
-
   useEffect(() => {
     const time  = setTimeout(onTimeOut, timer);
-
 
     return () =>{
 
         clearTimeout(time)
     }
-
-    
+ 
   }, [onTimeOut,timer]);
 
   useEffect(() => {
@@ -28,7 +24,7 @@ const QuizTimer = ({ timer, onTimeOut }) => {
         clearInterval(interval)
     }
 
-  }, [timer]);
+  }, []);
 
   
 

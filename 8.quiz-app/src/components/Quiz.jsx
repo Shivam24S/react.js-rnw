@@ -46,7 +46,7 @@ const Quiz = () => {
     
     <>
 
-<QuizTimer  timer={5000} onTimeOut={()=>handleSkip()}  />
+<QuizTimer key={qnsIndex} timer={5000} onTimeOut={handleSkip}  />
 
     <h1>{QUESTIONS[qnsIndex].qns}</h1>
 
