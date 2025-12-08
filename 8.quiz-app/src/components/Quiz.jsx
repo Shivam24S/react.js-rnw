@@ -1,66 +1,64 @@
-import React, { useCallback, useState } from 'react'
-import QUESTIONS from "../../qns.js"
-import QuizTimer from './QuizTimer.jsx'
+import React, { useCallback, useState } from "react";
+import QUESTIONS from "../../qns.js";
+import Question from "./Question.jsx";
 
 const Quiz = () => {
+  // const [activeIndex,setActiveIndex] = useState(0)
 
+  const [userAnswer, setUserAnswer] = useState([]);
 
-    // const [activeIndex,setActiveIndex] = useState(0)
+  const [answerState, setAnswerState] = useState("");
 
-    const [userAnswer,setUserAnswer] = useState([])
+  const qnsIndex =
+    answerState === "" ? userAnswer.length : userAnswer.length - 1;
 
+  const handleAnswer = useCallback((ans) => {
+    setUserAnswer((prevAnswer) => [...prevAnswer, ans]);
 
-    const qnsIndex = userAnswer.length
+    setAnswerState("selected");
 
+    setTimeout(() => {
+      if (ans === QUESTIONS[qnsIndex].option[0]) {
+        setAnswerState("correct");
+      } else {
+        setAnswerState("wrong");
+      }
 
-    const handleAnswer = useCallback((ans)=>{
-        setUserAnswer((prevAnswer)=>[...prevAnswer,ans])
+      setTimeout(() => {
+        setAnswerState("");
+      }, 1000);
+    }, 1000);
+  }, []);
 
-    },[])
+  console.log(answerState);
 
+  const quizComplete = qnsIndex === QUESTIONS.length;
 
-    const quizComplete = qnsIndex === QUESTIONS.length
+  if (quizComplete) {
+    return (
+      <>
+        <h1>Quiz Completed</h1>
+      </>
+    );
+  }
 
+  console.log("user answer", userAnswer);
 
-    if(quizComplete){
-        return (
-            <>
-       <h1>Quiz Completed</h1>            
-
-            </>
-        )
-    }
-
-    const shuffledOption = [...QUESTIONS[qnsIndex].option]
-
-    shuffledOption.sort(()=>Math.random()-0.5)
-
-    console.log("user answer",userAnswer)
-
-
-
-    const handleSkip = useCallback(()=>handleAnswer(null),[handleAnswer])
-
+  const handleSkip = useCallback(() => handleAnswer(null), [handleAnswer]);
 
   return (
-    
     <>
-
-<QuizTimer key={qnsIndex} timer={5000} onTimeOut={handleSkip}  />
-
-    <h1>{QUESTIONS[qnsIndex].qns}</h1>
-
-    <ul>
-        {shuffledOption.map((ans)=>(
-            <li key={ans} >
-            
-           <button onClick={()=>handleAnswer(ans)} >{ans}</button>
-            </li>
-        ))}
-    </ul>
-    
+      <Question
+      key={qnsIndex}
+        onSkip={handleSkip}
+        qns={[QUESTIONS[qnsIndex].qns]}
+        selected={userAnswer[userAnswer.length - 1]}
+        answerState={answerState}
+        handleAnswer={handleAnswer}
+        answer={[...QUESTIONS[qnsIndex].option]}
+      />
     </>
-  )
-}
+  );
+};
 
-export default Quiz
+export default Quiz;
