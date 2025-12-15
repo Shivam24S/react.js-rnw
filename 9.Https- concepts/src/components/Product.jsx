@@ -1,49 +1,124 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Loading from "./Loading";
+import axios from "axios";
 
 const Product = () => {
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const [product,setProduct] = useState([])
+  //   useEffect(() => {
+  //     const productData = async () => {
+  //       setLoading(true);
 
-    useEffect( ()=>{
+  //       try {
+  //         const res = await fetch("http://localhost:5000/products");
 
-        const productData = async () =>{
+  //         if (!res.ok) {
+  //           throw new Error("failed to fetch product data");
+  //         }
 
-            try {
+  //         const data = await res.json();
 
-                const res = await fetch("http://localhost:5000/products")
+  //         if (data.length <= 0) {
+  //           throw new Error("no product data found");
+  //         }
 
-                const data = await res.json()
+  //         setProduct(data);
+  //       } catch (error) {
+  //         setError(error.message);
+  //       }
 
-                setProduct(data)
-                
-            } catch (error) {
+  //       setLoading(false);
+  //     };
 
-                console.log(error)
-                
-            }
+  //     productData();
+  //   }, []);
 
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
 
+        const res = await axios("http://localhost:5000/products");
+
+        const data = res.data;
+
+        if (data.length <= 0) {
+          setError("no data found");
         }
 
-        productData()
+        setProduct(data);
+      } catch (error) {
+        console.log(error);
 
+        if (error.status === 404) {
+          setError("invalid url");
+        } else {
+          setError(error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    },[])
+    fetchProductData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>
-    {product.map((prod)=>{
-        return (
+      {/* {product.map((prod)=>{
+        return (    
 
             <>
-            <li>{prod.name}</li>
+            <li key={prod.id}>{prod.name}</li>
             <img src={prod.image} alt={prod.name} width={200} />
             <li>{prod.price}</li>
             </>
         )
-    })}
-    </>
-  )
-}
+    })} */}
 
-export default Product
+      <Container>
+        <Row>
+          {product.map((prod) => {
+            return (
+              <>
+                <Col md={3} sm={6} key={prod.id}>
+                  <Card>
+                    <Card.Img
+                      variant="top"
+                      src={prod.image}
+                      alt={prod.name}
+                      style={{ maxHeight: "200px" }}
+                    />
+                    <Card.Body>
+                      <Card.Title>{prod.name}</Card.Title>
+                      <Card.Text>{prod.description}</Card.Text>
+                      <Card.Title> ₹{prod.price}</Card.Title>
+                      <Button variant="primary">Add to card</Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </>
+            );
+          })}
+        </Row>
+      </Container>
+    </>
+  );
+};
+
+export default Product;
