@@ -86,7 +86,7 @@
       "category": "Storage",
       "price": 3499,
       "description": "Portable hard drive for backup and storage.",
-      "image": "https://images.pexels.com/photos/159226/pexels-photo-159226.jpeg"
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1e0_L0vI1YecImD_Qcogd8hF3cKI1l_MyoA&s"
     },
     {
       "id": 12,
@@ -161,4 +161,5 @@
       "image": "https://images.pexels.com/photos/585750/pexels-photo-585750.jpeg"
     }
   ]
+
 }
