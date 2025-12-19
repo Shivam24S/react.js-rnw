@@ -115,6 +115,7 @@ const Product = () => {
           onShow={showCart}
           onClose={() => setShowCart(false)}
           products={cart}
+          clearCart={()=>setCart([])}
         
         />
       )}
