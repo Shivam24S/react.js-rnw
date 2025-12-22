@@ -27,6 +27,50 @@ const Orders = ({ show, hide }) => {
     fetchOrderData();
   }, []);
 
+  // const handleOrderStatus = async (id, status) => {
+  //   try {
+  //     const res = await fetch(`http://localhost:5000/orders/${id}`, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ status }),
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("failed to update order status");
+  //     }
+
+  //     alert("order status updated successfully");
+
+  //     setOrders((prevOrder) =>
+  //       prevOrder.map((prod) =>
+  //         prod.id === id ? { ...prod, status: status } : prod
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  const handleOrderStatus = async (id, status) => {
+    try {
+      const res = await axios.patch(`http://localhost:5000/orders/${id}`, {
+        status,
+      });
+
+      alert("order status updated successfully");
+
+      setOrders((prevOrder) =>
+        prevOrder.map((prod) =>
+          prod.id === id ? { ...prod, status: status } : prod
+        )
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <Modal
       show={show}
@@ -44,7 +88,7 @@ const Orders = ({ show, hide }) => {
         {orders.length <= 0 ? (
           <p>No order data found</p>
         ) : (
-          <Table bordered striped hover responsive >
+          <Table bordered striped hover responsive>
             <thead>
               <tr>
                 <th>Order id</th>
@@ -52,7 +96,7 @@ const Orders = ({ show, hide }) => {
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Create At</th>
-                <th colSpan={2} >Actions</th>
+                <th colSpan={2}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -62,7 +106,7 @@ const Orders = ({ show, hide }) => {
                   <td>
                     <ul>
                       {ord.products.map((prod) => (
-                        <li>
+                        <li key={prod.id}>
                           {prod.name} X {prod.quantity}
                           <br />
                           <small>{prod.price}</small>
@@ -73,8 +117,17 @@ const Orders = ({ show, hide }) => {
                   <td>{ord.totalAmount}</td>
                   <td>{ord.status}</td>
                   <td>{new Date(ord.CreateAt).toLocaleString()}</td>
-                  <td>{<Button className="btn btn-success" >complete</Button>}</td>
-                  <td>{<Button className="btn btn-danger" >Delete</Button>}</td>
+                  <td>
+                    {
+                      <Button
+                        className="btn btn-success"
+                        onClick={() => handleOrderStatus(ord.id, "Completed")}
+                      >
+                        complete
+                      </Button>
+                    }
+                  </td>
+                  <td>{<Button className="btn btn-danger">Delete</Button>}</td>
                 </tr>
               ))}
             </tbody>
