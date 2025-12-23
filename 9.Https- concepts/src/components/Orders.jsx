@@ -66,6 +66,38 @@ const Orders = ({ show, hide }) => {
           prod.id === id ? { ...prod, status: status } : prod
         )
       );
+      
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const res = await fetch(`http://localhost:5000/orders/${id}`, {
+  //       method: "DELETE",
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("failed to delete order");
+  //     }
+
+  //     alert("order deleted successfully");
+
+  //     setOrders((prevOrder) => prevOrder.filter((ord) => ord.id !== id));
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/orders/${id}`);
+
+      alert("order deleted successfully");
+
+      setOrders((prevOrder) => prevOrder.filter((ord) => ord.id !== id));
+      hide()
     } catch (error) {
       console.log(error.message);
     }
@@ -122,12 +154,22 @@ const Orders = ({ show, hide }) => {
                       <Button
                         className="btn btn-success"
                         onClick={() => handleOrderStatus(ord.id, "Completed")}
+                        disabled={ord.status === "Completed"}
                       >
                         complete
                       </Button>
                     }
                   </td>
-                  <td>{<Button className="btn btn-danger">Delete</Button>}</td>
+                  <td>
+                    {
+                      <Button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(ord.id)}
+                      >
+                        Delete
+                      </Button>
+                    }
+                  </td>
                 </tr>
               ))}
             </tbody>

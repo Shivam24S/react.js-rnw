@@ -10,11 +10,13 @@ import Card from "react-bootstrap/Card";
 import Loading from "./Loading";
 import Navbar from "./Navbar";
 import CartModal from "./CartModal";
+import useHttp from "../hooks/http";
+import Error from "./Error";
 
 const Product = () => {
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const [product, setProduct] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
@@ -46,31 +48,39 @@ const Product = () => {
   //     productData();
   //   }, []);
 
+  const url = "http://localhost:5000/products";
+
+  const { data:product, loading, error, sendRequest } = useHttp({url});
+
+
+
   useEffect(() => {
     const fetchProductData = async () => {
-      try {
-        setLoading(true);
+      // try {
+      //   setLoading(true);
 
-        const res = await axios("http://localhost:5000/products");
+      //   const res = await axios("http://localhost:5000/products");
 
-        const data = res.data;
+      //   const data = res.data;
 
-        if (data.length <= 0) {
-          setError("no data found");
-        }
+      //   if (data.length <= 0) {
+      //     setError("no data found");
+      //   }
 
-        setProduct(data);
-      } catch (error) {
-        console.log(error);
+      //   setProduct(data);
+      // } catch (error) {
+      //   console.log(error);
 
-        if (error.status === 404) {
-          setError("invalid url");
-        } else {
-          setError(error.message);
-        }
-      } finally {
-        setLoading(false);
-      }
+      //   if (error.status === 404) {
+      //     setError("invalid url");
+      //   } else {
+      //     setError(error.message);
+      //   }
+      // } finally {
+      //   setLoading(false);
+      // }
+
+      sendRequest();
     };
 
     fetchProductData();
@@ -91,7 +101,7 @@ const Product = () => {
       setCart((prevItems) => [...prevItems, { ...prod, quantity: 1 }]);
     }
 
-    alert("item added to cart")
+    alert("item added to cart");
 
     console.log("similarProduct", similarProduct);
   };
@@ -103,7 +113,7 @@ const Product = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <Error/>;
   }
 
   return (
@@ -115,8 +125,7 @@ const Product = () => {
           onShow={showCart}
           onClose={() => setShowCart(false)}
           products={cart}
-          clearCart={()=>setCart([])}
-        
+          clearCart={() => setCart([])}
         />
       )}
       <Container>
