@@ -48,9 +48,9 @@ const Product = () => {
   //     productData();
   //   }, []);
 
-  const url = "http://localhost:5000/products";
+  // const url = "http://localhost:5000/products";
 
-  const { data:product, loading, error, sendRequest } = useHttp({url});
+  const { data:product, loading, error, sendRequest } = useHttp();
 
 
 
@@ -80,7 +80,10 @@ const Product = () => {
       //   setLoading(false);
       // }
 
-      sendRequest();
+      sendRequest({
+        url:"http://localhost:5000/products",
+        method:"GET",
+      });
     };
 
     fetchProductData();
@@ -113,7 +116,7 @@ const Product = () => {
   }
 
   if (error) {
-    return <Error/>;
+    return <Error message ={error}/>;
   }
 
   return (

@@ -22,9 +22,8 @@ import Loading from "./Loading";
 import Error from "./Error";
 
 function CartModal({ onShow, onClose, products, clearCart }) {
-  const url = "http://localhost:5000/orders";
-
-  const { loading, error, sendRequest } = useHttp({ url, method: "POST" });
+  
+  const { loading, error, sendRequest } = useHttp();
 
   const totalAmount = products.reduce((acc, curr) => {
     return (acc += curr.price * curr.quantity);
@@ -55,7 +54,11 @@ function CartModal({ onShow, onClose, products, clearCart }) {
 
       // const res = await axios.post("http://localhost:5000/orders",orderData)
 
-      sendRequest(orderData);
+      sendRequest({
+        url:"http://localhost:5000/orders",
+        method:"POST",
+        body:orderData
+      });
 
       alert("order placed successfully");
       onClose();

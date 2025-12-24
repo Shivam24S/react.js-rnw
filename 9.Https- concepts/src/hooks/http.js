@@ -1,33 +1,36 @@
 import axios from "axios";
 import { useCallback, useState } from "react";
 
-const useHttp = ({ url, method = "GET" }) => {
+const useHttp = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(
-    async (body = null, config) => {
+    async (config) => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-
-        const res = await axios({ url, method, data:body, ...config });
+        const res = await axios({
+          url: config.url,
+          method: config.method,
+          data: config.body,
+          ...config,
+        });
 
         setData(res.data);
 
         return res.data;
       } catch (error) {
-        setError(error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
     },
-    [url, method]
+    []
   );
 
-  console.log("use Data",data)
-
-
+  console.log("use Data", data);
 
   return {
     data,

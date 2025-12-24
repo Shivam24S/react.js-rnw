@@ -3,21 +3,33 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import useHttp from "../hooks/http";
+import Error from "./Error";
+import Loading from "./Loading";
 
 const Orders = ({ show, hide }) => {
   const [orders, setOrders] = useState([]);
 
+  console.log("orders data", orders);
+
+  const { sendRequest, loading, error } = useHttp();
+
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
-        const res = await axios("http://localhost:5000/orders");
+        const res = await sendRequest({
+          url: "http://localhost:5000/orders",
+          method: "GET",
+        });
 
-        const data = res.data;
+        const data = res;
+
+        console.log("fetch order data", data);
 
         if (data.length <= 0) {
           throw new Error("no order data found");
         } else {
-          setOrders(data);
+          setOrders(data || []);
         }
       } catch (error) {
         console.log(error.message);
@@ -25,7 +37,7 @@ const Orders = ({ show, hide }) => {
     };
 
     fetchOrderData();
-  }, []);
+  }, [sendRequest]);
 
   // const handleOrderStatus = async (id, status) => {
   //   try {
@@ -55,8 +67,10 @@ const Orders = ({ show, hide }) => {
 
   const handleOrderStatus = async (id, status) => {
     try {
-      const res = await axios.patch(`http://localhost:5000/orders/${id}`, {
-        status,
+      const res = await sendRequest({
+        url: `http://localhost:5000/orders/${id}`,
+        method: "PATCH",
+        body: { status },
       });
 
       alert("order status updated successfully");
@@ -66,10 +80,11 @@ const Orders = ({ show, hide }) => {
           prod.id === id ? { ...prod, status: status } : prod
         )
       );
-      
     } catch (error) {
       console.log(error.message);
     }
+
+    alert("order status updated successfully");
   };
 
   // const handleDelete = async (id) => {
@@ -92,16 +107,27 @@ const Orders = ({ show, hide }) => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/orders/${id}`);
-
-      alert("order deleted successfully");
+      const res = await sendRequest({
+        url: `http://localhost:5000/orders/${id}`,
+        method: "DELETE",
+      });
 
       setOrders((prevOrder) => prevOrder.filter((ord) => ord.id !== id));
-      hide()
+      hide();
     } catch (error) {
       console.log(error.message);
     }
+
+    alert("order deleted successfully");
   };
+
+  if (error) {
+    return <Error message={error} />;
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Modal
