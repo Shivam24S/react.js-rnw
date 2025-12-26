@@ -24,12 +24,14 @@ const ProductForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const productsData = {
-      id: new Date().getTime(),
-      product,
-    };
+    dispatch(
+      addProduct({
+        id: new Date().getTime(),
+        ...product,
+      }),
 
-    dispatch(addProduct(productsData));
+      setProduct({ name: "", price: "", qty: "", category: "" })
+    );
 
     alert("product added");
   };
