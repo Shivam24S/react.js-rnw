@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct } from "../features/product/productSlice";
+import {
+  deleteProduct,
+  setUpdateState,
+} from "../features/product/productSlice";
 
 const ProductList = () => {
   const product = useSelector((state) => state.product.products);
@@ -9,9 +12,7 @@ const ProductList = () => {
 
   const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
-  };
+
 
   return (
     <>
@@ -40,7 +41,14 @@ const ProductList = () => {
                 <td>{prod.qty}</td>
                 <td>{prod.category}</td>
                 <td>
-                  <button onClick={() => handleDelete(prod.id)}>delete</button>
+                  <button onClick={() => dispatch(setUpdateState(prod))}>
+                    update
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => dispatch(deleteProduct(prod.id))}>
+                    delete
+                  </button>
                 </td>
               </tr>
             ))
