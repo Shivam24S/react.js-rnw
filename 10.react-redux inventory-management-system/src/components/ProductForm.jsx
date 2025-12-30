@@ -3,7 +3,15 @@ import {
   addProduct,
   updateProductData,
 } from "../features/product/productSlice";
+
 import { useDispatch, useSelector } from "react-redux";
+
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 const ProductForm = () => {
   const [product, setProduct] = useState({
@@ -55,42 +63,65 @@ const ProductForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="name"
-          value={product.name}
-          onChange={(e) => handleChange("name", e)}
-          required
-        />
-        <br />
-        <input
-          type="number"
-          placeholder="price"
-          value={product.price}
-          onChange={(e) => handleChange("price", e)}
-          required
-        />
-        <br />
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={product.qty}
-          onChange={(e) => handleChange("qty", e)}
-          required
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="category"
-          value={product.category}
-          onChange={(e) => handleChange("category", e)}
-          required
-        />
-        <br />
+      <Container>
+        <Row>
+          <Col>
+            <Card className="p-4 shadow m-2">
+              <h3> + {updateState ? "Update Product Data" : "Add Product"}</h3>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Product Name"
+                    value={product.name}
+                    onChange={(e) => handleChange("name", e)}
+                    required
+                  />
+                </Form.Group>
 
-        <button type="submit">{updateState ? "update" : "add product"}</button>
-      </form>
+                <Form.Group className="mb-3">
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="price"
+                    value={product.price}
+                    onChange={(e) => handleChange("price", e)}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Product Quantity "
+                    value={product.qty}
+                    onChange={(e) => handleChange("qty", e)}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Category</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Product Category "
+                    value={product.category}
+                    onChange={(e) => handleChange("category", e)}
+                    required
+                  />
+                </Form.Group>
+                <div className="text-center">
+                  <Button className="btn btn-primary " type="submit">
+                    {updateState ? "update" : "Add Product "}
+                  </Button>
+                </div>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

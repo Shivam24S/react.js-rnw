@@ -29,7 +29,7 @@ const product = createSlice({
         state.products[index] = action.payload;
       }
 
-      
+      state.updateState = null;
     },
 
     deleteProduct: (state, action) => {
