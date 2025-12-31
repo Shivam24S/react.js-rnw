@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { HiCubeTransparent } from "react-icons/hi2";
+import InventoryStats from "./components/InventoryStats";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <h1 className="text-center mt-3">
               <HiCubeTransparent fontSize={50} /> Inventory Management System
             </h1>
+            <InventoryStats />
             <ProductForm />
             <ProductList />
           </Col>
