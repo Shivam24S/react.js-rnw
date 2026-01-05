@@ -11,21 +11,21 @@ const user = createSlice({
   initialState,
   reducers: {
     requestStart: (state) => {
-      state.loading = true;
-      state.error = null;
+      (state.loading = true), (state.error = null);
     },
     requestSuccess: (state, action) => {
-      state.loading = false;
-      state.users = action.payload
-      
+      (state.loading = false), (state.users = action.payload);
     },
-    requestFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    requestFailed: (state, action) => {
+      (state.loading = false), (state.error = action.payload);
+    },
+    addUser: (state, action) => {
+      (state.loading = false), state.users.push(action.payload);
+      console.log([...state.users])
     },
   },
 });
 
-export const { requestStart, requestSuccess, requestFail } = user.actions;
+export const { requestStart, requestSuccess, requestFailed } = user.actions;
 
 export default user.reducer;

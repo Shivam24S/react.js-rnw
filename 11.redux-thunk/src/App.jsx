@@ -1,11 +1,11 @@
 import React from "react";
-import UserLists from "./components/UserLists";
+import UserList from "./components/UserList";
 
 const App = () => {
   return (
-    <>
-      <UserLists />
-    </>
+    <div>
+      <UserList />
+    </div>
   );
 };
 
