@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, fetchUser } from "../features/user/userThunk";
+import { addUser, deleteUser, fetchUser } from "../features/user/userThunk";
 
 const UserList = () => {
   const [userInput, setUserInput] = useState("");
@@ -13,11 +13,12 @@ const UserList = () => {
     dispatch(fetchUser());
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addUser({ name: userInput }));
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
-    dispatch(addUser(userInput))
-  }
+    setUserInput("");
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -34,7 +35,12 @@ const UserList = () => {
       </form>
 
       {users.map((u) => (
-        <li>{u.name}</li>
+        <ul>
+          <li key={u.id}>{u.name}</li>
+          <li>
+            <button onClick={() => dispatch(deleteUser(u.id))}>delete</button>
+          </li>
+        </ul>
       ))}
     </>
   );

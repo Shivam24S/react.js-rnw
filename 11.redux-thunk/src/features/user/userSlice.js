@@ -19,13 +19,23 @@ const user = createSlice({
     requestFailed: (state, action) => {
       (state.loading = false), (state.error = action.payload);
     },
-    addUser: (state, action) => {
+    addUserSuccess: (state, action) => {
       (state.loading = false), state.users.push(action.payload);
-      console.log([...state.users])
+      console.log([...state.users]);
+    },
+    deleteUserSuccess: (state, action) => {
+      state.loading = false;
+      state.users = state.users.filter((u) => u.id !== action.payload);
     },
   },
 });
 
-export const { requestStart, requestSuccess, requestFailed } = user.actions;
+export const {
+  requestStart,
+  requestSuccess,
+  requestFailed,
+  addUserSuccess,
+  deleteUserSuccess,
+} = user.actions;
 
 export default user.reducer;
