@@ -6,10 +6,11 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-import { auth } from "../firebase/config";
+import { auth, googleProvider } from "../firebase/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 
 const Auth = () => {
@@ -60,6 +61,19 @@ const Auth = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+
+      setUser(result.user.email);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -91,12 +105,22 @@ const Auth = () => {
                   ></Form.Control>
                 </Form.Group>
 
-                <Button className="btn btn-primary btn-success" type="submit">
+                <Button
+                  className="btn btn-primary btn-success"
+                  type="submit"
+                  disabled={loading}
+                >
                   {isLogin ? "login" : "sign up"}
                 </Button>
+
+                <Button onClick={handleGoogleLogin} disabled={loading} className="mt-3 btn-danger" >
+                  Login With Google
+                </Button>
+
                 <Button
                   className="btn btn-primary mt-3"
                   onClick={() => setIsLogin(!isLogin)}
+                  disabled={loading}
                 >
                   {isLogin ? "New User ? Sign Up" : "Already User ? Login"}
                 </Button>
