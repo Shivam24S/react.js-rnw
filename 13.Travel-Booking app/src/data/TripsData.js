@@ -1,4 +1,4 @@
-const trips = [
+export const trips = [
   {
     id: 1,
     name: "Romantic Paris Getaway",
@@ -148,7 +148,8 @@ const trips = [
     price: 132700,
     duration: "5 Days / 4 Nights",
     rating: 4.8,
-    image: "https://images.pexels.com/photos/161936/petra-jordan-architecture-history-161936.jpeg",
+    image:
+      "https://images.pexels.com/photos/29887318/pexels-photo-29887318.jpeg",
     description:
       "Discover ancient wonders and desert beauty in the Middle East.",
   },
@@ -159,8 +160,18 @@ const trips = [
     price: 124400,
     duration: "6 Days / 5 Nights",
     rating: 4.7,
-    image:
-      "https://images.pexels.com/photos/351283/pexels-photo-351283.jpeg",
+    image: "https://images.pexels.com/photos/351283/pexels-photo-351283.jpeg",
     description: "Vibrant culture, beaches, and iconic landmarks await.",
+  },
+  {
+    id: 16,
+    name: "Amalfi Coast Scenic Escape",
+    destination: "Amalfi Coast, Italy",
+    price: 138500,
+    duration: "6 Days / 5 Nights",
+    rating: 4.9,
+    image: "https://images.pexels.com/photos/17635101/pexels-photo-17635101.jpeg",
+    description:
+      "Enjoy dramatic coastal views, charming villages, and authentic Italian cuisine.",
   },
 ];

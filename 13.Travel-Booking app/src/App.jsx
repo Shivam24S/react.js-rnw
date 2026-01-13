@@ -5,6 +5,8 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import Layout from "./routes/Layout";
 import Home from "./components/ui/Home";
+import TripsData from "./components/pages/Trips";
+import TripDetail from "./components/pages/TripDetail";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -15,10 +17,15 @@ const App = () => {
         {
           index: true,
           element: <Home />,
-        },{
-          path:"trips",
-          // element:
-        }
+        },
+        {
+          path: "trips",
+          element: <TripsData />,
+        },
+        {
+          path: "trips/:id",
+          element: <TripDetail />,
+        },
       ],
     },
   ]);
