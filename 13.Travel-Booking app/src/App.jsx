@@ -32,13 +32,7 @@ const App = () => {
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col>
-            <RouterProvider router={router}></RouterProvider>
-          </Col>
-        </Row>
-      </Container>
+      <RouterProvider router={router}></RouterProvider>
     </>
   );
 };
