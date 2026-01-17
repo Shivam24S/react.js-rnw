@@ -1,108 +1,159 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { trips } from "../../data/TripsData";
-
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Container,
   Row,
   Col,
   Button,
-  Image,
   Badge,
   Card,
   ListGroup,
+  Accordion,
 } from "react-bootstrap";
+import { trips } from "../../data/TripsData";
 
 const TripDetail = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const trip = trips.find((t) => t.id === Number(id));
 
   if (!trip) {
     return (
-      <>
-        <Container>
-          <Row>
-            <Col className="text-center">
-              <h4 className="mt-5">Trip Data not found</h4>
-              <Button className="mt-2" onClick={() => navigate(-1)}>
-                go back to trips
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-      </>
+      <Container className="py-5 text-center">
+        <h3>Trip not found</h3>
+        <Button variant="primary" onClick={() => navigate(-1)}>
+          Back to Trips
+        </Button>
+      </Container>
     );
   }
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col className="mt-3">
-            <Image
-              src={trip.image}
-              alt={trip.name}
-              className="img-fluid rounded-5 shadow-lg"
-              style={{ maxHeight: "420px", width: "100%", objectFit: "cover" }}
-            ></Image>
-          </Col>
-        </Row>
+    <Container className="py-5">
+      <Row className="mb-4">
+        <Col>
+          <img
+            src={trip.image}
+            alt={trip.name}
+            className="img-fluid rounded-5 shadow-lg"
+            style={{ maxHeight: "420px", width: "100%", objectFit: "cover" }}
+          />
+        </Col>
+      </Row>
 
-        <Row>
-          <Col className="mt-3">
-            <h1>{trip.name}</h1>
-            <h5>{trip.destination}</h5>
+      <Row className="g-4">
+        <Col lg={8}>
+          <h2 className="fw-bold">{trip.name}</h2>
+          <p className="text-muted">{trip.destination}</p>
 
-            <div className="d-flex  gap-2">
-              <Badge bg="primary">
-                <span style={{ fontSize: "15px" }}>{trip.duration}</span>
-              </Badge>
-              <Badge bg="secondary">
-                <span style={{ fontSize: "15px" }}>{trip.rating}</span>
-              </Badge>
-              <Badge bg="success">
-                <span style={{ fontSize: "15px" }}>₹ {trip.price}</span>
-              </Badge>
-              <Badge bg="info">
-                <span style={{ fontSize: "15px" }}> {trip.difficulty}</span>
-              </Badge>
-            </div>
-          </Col>
-        </Row>
+          <div className="mb-3">
+            <Badge bg="primary" className="me-2">
+              {trip.duration}
+            </Badge>
+            <Badge bg="secondary" className="me-2">
+              ⭐ {trip.rating}
+            </Badge>
+            <Badge bg="info" className="me-2">
+              {trip.difficulty}
+            </Badge>
+            <Badge bg="success">₹ {trip.price}</Badge>
+          </div>
 
-        <Row className="mt-3">
-          <Col lg={8}>
-            <Card className="mb-2">
-              <Card.Body>
-                <Card.Title>
-                  <h6>Overview</h6>
-                </Card.Title>
-                <Card.Text>{trip.overview}</Card.Text>
-              </Card.Body>
-            </Card>
+          <Card className="mb-4 shadow-sm">
+            <Card.Body>
+              <Card.Title>Overview</Card.Title>
+              <Card.Text>{trip.overview}</Card.Text>
+            </Card.Body>
+          </Card>
 
-            <Card>
-              <Card.Body>
-                <Card.Title>
-                  <h6>Highlights</h6>
-                </Card.Title>
-                <Card.Text>
-                  <ListGroup variant="flush" >
-                    {trip.highlights.map((t, index) => (
-                      <ListGroup.Item key={index}>{t}</ListGroup.Item>
+          <Card className="mb-4 shadow-sm">
+            <Card.Body>
+              <Card.Title>Trip Highlights</Card.Title>
+              <ListGroup variant="flush">
+                {trip.highlights.map((item, index) => (
+                  <ListGroup.Item key={index}>✅ {item}</ListGroup.Item>
+                ))}
+              </ListGroup>
+            </Card.Body>
+          </Card>
+
+          <Card className="mb-4 shadow-sm">
+            <Card.Body>
+              <Card.Title>Day-wise Itinerary</Card.Title>
+              <Accordion flush>
+                {trip.itinerary.map((day, index) => (
+                  <Accordion.Item eventKey={String(index)} key={index}>
+                    <Accordion.Header>
+                      Day {day.day}: {day.title}
+                    </Accordion.Header>
+                    <Accordion.Body>{day.description}</Accordion.Body>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
+            </Card.Body>
+          </Card>
+
+          <Row className="g-3 mb-4">
+            <Col md={6}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>Inclusions</Card.Title>
+                  <ListGroup variant="flush">
+                    {trip.inclusions.map((item, i) => (
+                      <ListGroup.Item key={i}>✔ {item}</ListGroup.Item>
                     ))}
                   </ListGroup>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col md={6}>
+              <Card className="h-100 shadow-sm">
+                <Card.Body>
+                  <Card.Title>Exclusions</Card.Title>
+                  <ListGroup variant="flush">
+                    {trip.exclusions.map((item, i) => (
+                      <ListGroup.Item key={i}>✖ {item}</ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+
+          <Card className="mb-4 shadow-sm">
+            <Card.Body>
+              <Card.Title>Best Time to Visit</Card.Title>
+              <Card.Text>{trip.bestTimeToVisit}</Card.Text>
+            </Card.Body>
+          </Card>
+
+          <Button variant="outline-dark" onClick={() => navigate(-1)}>
+            ← Back to Trips
+          </Button>
+        </Col>
+
+        <Col lg={4}>
+          <Card className="shadow-sm sticky-top" style={{ top: "90px" }}>
+            <Card.Body>
+              <h4 className="fw-bold mb-3">₹ {trip.price}</h4>
+              <p className="text-muted mb-3">
+                {trip.duration} • {trip.difficulty}
+              </p>
+
+              <Button variant="primary" size="lg" className="w-100 mb-2">
+                Book Now
+              </Button>
+
+              <Button variant="outline-secondary" className="w-100">
+                Enquire
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
