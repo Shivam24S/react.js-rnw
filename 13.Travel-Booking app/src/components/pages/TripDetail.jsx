@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -11,12 +11,15 @@ import {
   Accordion,
 } from "react-bootstrap";
 import { trips } from "../../data/TripsData";
+import { AuthContext } from "../../context/AuthContext";
 
 const TripDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const trip = trips.find((t) => t.id === Number(id));
+
+  const { user } = useContext(AuthContext);
 
   if (!trip) {
     return (
@@ -28,6 +31,14 @@ const TripDetail = () => {
       </Container>
     );
   }
+
+  const handleBook = () => {
+    if (!user) {
+      navigate("/auth");
+    } else {
+      navigate("/book");
+    }
+  };
 
   return (
     <Container className="py-5">
@@ -142,7 +153,12 @@ const TripDetail = () => {
                 {trip.duration} • {trip.difficulty}
               </p>
 
-              <Button variant="primary" size="lg" className="w-100 mb-2">
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-100 mb-2"
+                onClick={handleBook}
+              >
                 Book Now
               </Button>
 

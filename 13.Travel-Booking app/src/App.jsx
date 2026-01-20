@@ -8,6 +8,7 @@ import Home from "./components/ui/Home";
 import TripsData from "./components/pages/Trips";
 import TripDetail from "./components/pages/TripDetail";
 import Auth from "./auth/Auth";
+import BookingForm from "./components/pages/BookingForm";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const App = () => {
         {
           path: "auth",
           element: <Auth />,
+        },
+        {
+          path: "book",
+          element: <BookingForm />,
         },
       ],
     },

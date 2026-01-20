@@ -1,7 +1,19 @@
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { useContext } from "react";
+import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
 function NavbarMenu() {
+  const { user } = useContext(AuthContext);
+
+
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -17,7 +29,25 @@ function NavbarMenu() {
             </Nav.Link>
             <Nav.Link href="#link">Destinations</Nav.Link>
             <Nav.Link href="#link">About</Nav.Link>
-            <Nav.Link href="/auth">Login</Nav.Link>
+
+            {!user ? (
+              <>
+                <Nav.Link as={NavLink} to="/auth">
+                  Login
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                {/* <p>{user.displayName || user.email}</p> */}
+                {/* <Nav.Link as={NavLink} onClick={handleSignOut}>
+                  Log Out
+                </Nav.Link> */}
+
+                <Button variant="primary" onClick={() => handleSignOut()}>
+                  LogOut
+                </Button>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

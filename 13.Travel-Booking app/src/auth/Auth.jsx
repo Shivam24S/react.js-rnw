@@ -15,6 +15,7 @@ import {
   Card,
   Alert,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,6 +24,8 @@ const Auth = () => {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const [error, setError] = useState(null);
 
@@ -47,14 +50,18 @@ const Auth = () => {
           authData.email,
           authData.password,
         );
-
-        console.log("user", result);
+        if (result) {
+          navigate("/trips");
+        }
       } else {
         const result = await createUserWithEmailAndPassword(
           auth,
           authData.email,
           authData.password,
         );
+        if (result) {
+          navigate("/trips");
+        }
       }
     } catch (error) {
       setError(error);
@@ -65,17 +72,19 @@ const Auth = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
 
-      console.log("user", result.email);
+       if (result) {
+          navigate("/trips");
+        }
     } catch (error) {
       setError(error);
     }
   };
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Row>
         <Col>
-          <Card className="shadow  py-2" style={{ width: "400px", }}>
+          <Card className="shadow  py-2" style={{ width: "400px" }}>
             <Card.Title className="text-center">
               {isLogin ? "Login" : "Sign up"}
             </Card.Title>
