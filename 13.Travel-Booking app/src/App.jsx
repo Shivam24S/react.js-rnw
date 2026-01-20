@@ -7,6 +7,7 @@ import Layout from "./routes/Layout";
 import Home from "./components/ui/Home";
 import TripsData from "./components/pages/Trips";
 import TripDetail from "./components/pages/TripDetail";
+import Auth from "./auth/Auth";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const App = () => {
         {
           path: "trips/:id",
           element: <TripDetail />,
+        },
+        {
+          path: "auth",
+          element: <Auth />,
         },
       ],
     },

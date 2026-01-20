@@ -1,5 +1,5 @@
 import { Container, Navbar, Nav } from "react-bootstrap";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function NavbarMenu() {
   return (
@@ -17,7 +17,7 @@ function NavbarMenu() {
             </Nav.Link>
             <Nav.Link href="#link">Destinations</Nav.Link>
             <Nav.Link href="#link">About</Nav.Link>
-            <Nav.Link href="#link">Login</Nav.Link>
+            <Nav.Link href="/auth">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
