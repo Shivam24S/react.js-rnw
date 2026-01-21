@@ -84,9 +84,9 @@ const Auth = () => {
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Row>
         <Col>
-          <Card className="shadow  py-2" style={{ width: "400px" }}>
+          <Card className="shadow  p-4" style={{ width: "400px" }}>
             <Card.Title className="text-center">
-              {isLogin ? "Login" : "Sign up"}
+            <h4>  {isLogin ? "Login" : "Sign up"}</h4>
             </Card.Title>
             <Form
               className="d-flex justify-content-center align-items-center flex-column"

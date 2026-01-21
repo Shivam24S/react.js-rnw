@@ -9,12 +9,15 @@ import TripsData from "./components/pages/Trips";
 import TripDetail from "./components/pages/TripDetail";
 import Auth from "./auth/Auth";
 import BookingForm from "./components/pages/BookingForm";
+import ProtectedRoutes from "./routes/ProtectedRoutes";
+import ErrorElement from "./components/pages/ErrorElement";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
+      errorElement: <ErrorElement />,
       children: [
         {
           index: true,
@@ -33,8 +36,13 @@ const App = () => {
           element: <Auth />,
         },
         {
-          path: "book",
-          element: <BookingForm />,
+          element: <ProtectedRoutes />,
+          children: [
+            {
+              path: "trip/:id/book",
+              element: <BookingForm />,
+            },
+          ],
         },
       ],
     },

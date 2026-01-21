@@ -10,7 +10,7 @@ function NavbarMenu() {
 
 
 
-  const handleSignOut = async () => {
+  const handleLogout = async () => {
     await signOut(auth);
   };
 
@@ -31,21 +31,15 @@ function NavbarMenu() {
             <Nav.Link href="#link">About</Nav.Link>
 
             {!user ? (
-              <>
-                <Nav.Link as={NavLink} to="/auth">
-                  Login
-                </Nav.Link>
-              </>
+              <Nav.Link as={NavLink} to="/auth">
+                Login
+              </Nav.Link>
             ) : (
               <>
-                {/* <p>{user.displayName || user.email}</p> */}
-                {/* <Nav.Link as={NavLink} onClick={handleSignOut}>
-                  Log Out
-                </Nav.Link> */}
-
-                <Button variant="primary" onClick={() => handleSignOut()}>
-                  LogOut
-                </Button>
+                <Navbar.Text className="me-2">
+                  {user.displayName || user.email}
+                </Navbar.Text>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </>
             )}
           </Nav>

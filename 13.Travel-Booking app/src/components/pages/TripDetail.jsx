@@ -36,7 +36,7 @@ const TripDetail = () => {
     if (!user) {
       navigate("/auth");
     } else {
-      navigate("/book");
+      navigate(`/trip/${id}/book`);
     }
   };
 
