@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { trips } from "../../data/TripsData";
 import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
 import { AuthContext } from "../../context/AuthContext";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const BookingForm = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
 
@@ -20,6 +24,8 @@ const BookingForm = () => {
     email: user.email,
     phone: "",
     date: "",
+    person: 1,
+    total: selectedTrip.price,
   });
 
   const handleChange = async (identifier, e) => {
@@ -31,13 +37,46 @@ const BookingForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("form data", formData);
+    if (!formData.phone && !formData.date) {
+      alert("all form data is required");
+      return;
+    }
 
-    alert("form data submitted");
+    await addDoc(collection(db, "booking"), {
+      tripId: selectedTrip.id,
+      tripName: selectedTrip.name,
+      tripDestination: selectedTrip.destination,
+
+      userId: user.uid,
+      userName: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      TravelDate: formData.date,
+      person: formData.person,
+      TotalAmount: formData.total,
+    });
+
+    alert("trip booked successfully");
+
+    setFormData({
+      phone: "",
+      date: "",
+      person: 1,
+      total: selectedTrip.price,
+    });
   };
+
+  useEffect(() => {
+    setFormData((prevData) => {
+      return {
+        ...prevData,
+        total: prevData.person * selectedTrip.price,
+      };
+    });
+  }, [formData.person, selectedTrip.price]);
 
   return (
     <>
@@ -62,43 +101,72 @@ const BookingForm = () => {
             <Card className="mt-5">
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-2">
-                    <Form.Label>Traveler Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => handleChange("name", e)}
-                    />
-                  </Form.Group>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>Traveler Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={formData.name}
+                          onChange={(e) => handleChange("name", e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => handleChange("email", e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleChange("email", e)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group className="mb-2">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handleChange("phone", e)}
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-2">
-                    <Form.Label>Travel Date</Form.Label>
-                    <Form.Control
-                      type="date"
-                      value={formData.date}
-                      onChange={(e) => handleChange("date", e)}
-                    />
-                  </Form.Group>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => handleChange("phone", e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>Travel Date</Form.Label>
+                        <Form.Control
+                          type="date"
+                          value={formData.date}
+                          onChange={(e) => handleChange("date", e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>No of Person</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={formData.person}
+                          onChange={(e) => handleChange("person", e)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group className="mb-2">
+                        <Form.Label>Grand Total</Form.Label>
+                        <Form.Control value={formData.total} readOnly />
+                      </Form.Group>
+                    </Col>
+                  </Row>
 
                   <div className="d-flex gap-3 mt-4">
-                    <Button>Back to Trips</Button>
+                    <Button onClick={() => navigate(-1)}>Back to Trips</Button>
                     <Button variant="primary" type="submit">
                       Confirm Booking
                     </Button>
