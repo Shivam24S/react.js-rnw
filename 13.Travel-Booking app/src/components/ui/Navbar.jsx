@@ -8,8 +8,6 @@ import { auth } from "../../firebase/config";
 function NavbarMenu() {
   const { user } = useContext(AuthContext);
 
-
-
   const handleLogout = async () => {
     await signOut(auth);
   };
@@ -36,9 +34,9 @@ function NavbarMenu() {
               </Nav.Link>
             ) : (
               <>
-                <Navbar.Text className="me-2">
-                  {user.displayName || user.email}
-                </Navbar.Text>
+                <Nav.Link as={NavLink} to="/myBooking" className="me-2">
+                  My Bookings
+                </Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </>
             )}

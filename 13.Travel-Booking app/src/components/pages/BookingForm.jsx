@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { trips } from "../../data/TripsData";
 import { Container, Row, Col, Button, Card, Form } from "react-bootstrap";
 import { AuthContext } from "../../context/AuthContext";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
 const BookingForm = () => {
@@ -57,6 +57,7 @@ const BookingForm = () => {
       TravelDate: formData.date,
       person: formData.person,
       TotalAmount: formData.total,
+      createdAt: serverTimestamp(),
     });
 
     alert("trip booked successfully");

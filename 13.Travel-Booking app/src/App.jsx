@@ -10,7 +10,8 @@ import TripDetail from "./components/pages/TripDetail";
 import Auth from "./auth/Auth";
 import BookingForm from "./components/pages/BookingForm";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
-import ErrorElement from "./components/pages/ErrorElement";
+import ErrorElement from "./components/ui/ErrorElement";
+import MyBookings from "./components/pages/MyBookings";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const App = () => {
             {
               path: "trip/:id/book",
               element: <BookingForm />,
+            },
+            {
+              path: "myBooking",
+              element: <MyBookings />,
             },
           ],
         },
